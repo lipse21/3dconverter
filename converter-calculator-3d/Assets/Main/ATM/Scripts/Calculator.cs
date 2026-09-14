@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Calculator : MonoBehaviour
 {
@@ -7,8 +8,8 @@ public class Calculator : MonoBehaviour
 
     private string _currentInput = "";
     private float _accumulatedResult = 0f;  
-    private string _pendingOperation = "";  
-    private bool _isNewInput = true;       
+    private string _pendingOperation = "";
+    private bool _isNewInput = true;
 
     public void OnDigitClicked(string digit)
     {

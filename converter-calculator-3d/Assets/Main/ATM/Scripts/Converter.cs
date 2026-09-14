@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +10,10 @@ public class Converter : MonoBehaviour
     [SerializeField] private TMP_Dropdown _toDropdown;
     [SerializeField] private TMP_Text _resultText;
 
-    private readonly float[] _rates = { 1f, 0.92f, 90f, 7.2f }; // USD, EUR, RUB, CNY
+
+    public event Action OnCalculatorButtonActivated;
+
+    private readonly float[] _rates = { 1f, 0.92f, 90f, 7.2f }; // USD, EUR, RUB, CNY (поменять курсы хотя пофиг)
 
     public void OnConvertButtonClicked()
     {
@@ -32,5 +36,10 @@ public class Converter : MonoBehaviour
         float result = inUsd * _rates[toIndex];
 
         _resultText.text = $"{result:F2}";
+    }
+
+    public void OnCalculatorButtonClicked()
+    {
+        OnCalculatorButtonActivated?.Invoke();
     }
 }

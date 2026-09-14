@@ -6,10 +6,14 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] float _speed;
+
+    [Header("Neccessary components")]
+    [SerializeField] private float _speed;
+    [SerializeField] private ReleaseCursour _cursor;
 
     private Rigidbody _rigidbody;
     private InputAction _moveAction;
+    private bool _isMoveEnabled;
 
     private void Awake()
     {
@@ -21,16 +25,28 @@ public class Movement : MonoBehaviour
    private void OnEnable()
     {
         _moveAction.Enable();
+        _cursor.CursorStateChanged += OnCursorChanged;
     }
 
     private void OnDisable()
     {
         _moveAction.Disable();
+        _cursor.CursorStateChanged -= OnCursorChanged;
     }
 
     private void FixedUpdate()
     {
         Move();
+    }
+
+    private void OnCursorChanged(bool isCursorReleased)
+    {
+        _isMoveEnabled = !isCursorReleased;
+
+        if (_isMoveEnabled)
+            _moveAction.Enable();
+        else
+            _moveAction.Disable();
     }
 
     private void Move()
